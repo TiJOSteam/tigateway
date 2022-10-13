@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc additionalparam=" -locale en_US -encoding UTF-8 -charset UTF-8 "  access="public" author="true" classpath="C:\Users\Administrator\.tijos\platforms\3\tijos_runtime-3.0.5.jar" destdir="doc" doctitle="TiGW200 " nodeprecated="false" nodeprecatedlist="true" noindex="false" nonavbar="false" notree="false" packagenames="tigateway.modbus.protocol,tigateway.modbus.rtu,tigateway,tigateway.peripheral" source="10" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
