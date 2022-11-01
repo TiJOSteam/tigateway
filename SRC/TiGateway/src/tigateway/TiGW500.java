@@ -6,7 +6,6 @@ import tigateway.serialport.TiSerialPort;
 import tijos.framework.devicecenter.TiADC;
 import tijos.framework.devicecenter.TiGPIO;
 import tijos.framework.devicecenter.TiI2CMaster;
-import tijos.framework.util.Delay;
 
 public class TiGW500 extends TiGateway {
 
@@ -212,60 +211,4 @@ public class TiGW500 extends TiGateway {
 		}
 
 	}
- 
-	public static final void main(String [] args) throws IOException {
-		
-		TiGW500 gw500 = TiGW500.getInstance();
-		
-
-	//	gw500.relayControl(0, 1);
-//		
-////		for(int i = 0 ; i< 3; i ++) {
-////			gw500.blueLED().turnOn();
-////			Delay.msDelay(1000);
-////			gw500.blueLED().turnOff();
-////			Delay.msDelay(1000);
-////		
-////			gw500.greenLED().turnOn();
-////			Delay.msDelay(1000);
-////			gw500.greenLED().turnOff();
-////			Delay.msDelay(1000);
-////		}
-		
-	//	gw500.relayControl(0, 0);
-
-	//	gw500.currentLoopOutput(0, 20000);
-		
-	//	Delay.sDelay(1);
-		
-	//	System.out.println(" input " + gw500.currentLoopInput(0));
- 
-		
-//		for(int i = 0;i <= 20*1000 ; i += 1000) {
-//			gw500.currentLoopOutput(0, i);
-//			
-//			int v = gw500.currentLoopInput(0);
-//			
-//			System.out.println("output " + i  + " input " + v + " delta  " + ((v - i) / (float)i));
-//			
-//			//Delay.sDelay(8);
-//			
-//		}
-		
-		int i = 0;
-		
-		while(i++ < 1000) {
-			int v = gw500.currentLoopInput(0);
-			
-			System.out.println("ad0 " + v);
-			
-			Delay.sDelay(1);
-		}
-		
-		
-				
-		System.out.println("finished");
-		
-	}
-	
 }
