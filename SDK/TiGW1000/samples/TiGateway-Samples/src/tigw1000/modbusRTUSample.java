@@ -18,21 +18,24 @@ public class modbusRTUSample {
 		try {
 			System.out.println("This is a modbus rtu sample.");
 
-			TiGW1000 gw1000 = TiGW1000.getInstance();
-			
-			//获取第0路RS485 9600 8 1 N
-			TiSerialPort rs485 =gw1000.getSerialPort(0, 9600,8,1,TiUART.PARITY_NONE);
+			TiGW1000 gateway = TiGW1000.getInstance();
+
+			// 获取第0路RS485 9600 8 1 N
+			TiSerialPort rs485 = gateway.getRS485(19200,8,1,TiUART.PARITY_NONE);
+
+//			// 获取第1路RS485 9600 8 1 N
+//			TiSerialPort rs485 = gw200.getRS485ById(1,9600,8,1,TiUART.PARITY_NONE);
 
 			// MODBUS RTU
 			// 通讯超时500 ms
 			ModbusRTU modbusRtu = new ModbusRTU(rs485, 500);
 
 			// MODBUS 数据处理
-			// 每2秒进行一次数据处理同时绿灯亮一次
+			// 每5秒进行一次数据处理同时绿灯亮一次
 			while (true) {
-				gw1000.greenLED().turnOn();
+				gateway.greenLED().turnOn();
 				MonitorProcess(modbusRtu);
-				gw1000.greenLED().turnOff();
+				gateway.blueLED().turnOff();
 				Delay.msDelay(2000);
 			}
 

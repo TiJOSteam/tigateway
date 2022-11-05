@@ -57,7 +57,9 @@ public class TiGW50 extends TiGateway {
 	}
 
 	/**
-	 * 初始化GPIO 
+	 * 初始化GPIO  
+	 * @param id  GPIO id 5 10 11 12
+	 * @param in  true: GPIO浮空输入方式  false: GPIO推挽输出 
 	 */
 	@Override
 	public void digitalOpen(int id, boolean in) throws IOException {
@@ -74,9 +76,9 @@ public class TiGW50 extends TiGateway {
 
 	
 	/**
-	 * 数字输出控制 DO
+	 * GPIO输出控制 DO
 	 * 
-	 * @param id  id
+	 * @param id  id  GPIO id 5 10 11 12
 	 * @param ctl 0:OFF 1:ON
 	 * @throws IOException
 	 */
@@ -94,9 +96,9 @@ public class TiGW50 extends TiGateway {
 	}
 
 	/**
-	 * 数字输入 DI
+	 * GPIO输入 DI
 	 * 
-	 * @param id id
+	 * @param id  GPIO id 5 10 11 12
 	 * @return 0:OFF 1:ON
 	 * @throws IOException
 	 */

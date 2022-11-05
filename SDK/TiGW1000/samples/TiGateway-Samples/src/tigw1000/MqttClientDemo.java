@@ -82,7 +82,7 @@ public class MqttClientDemo {
 
     public static void main(String args[]) {
 
-        // 启动以太网络
+        // 启动LTE网络
         try {
             TiLAN.getInstance().startup(20);
         } catch (IOException ie) {

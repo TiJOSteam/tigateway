@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="net.tijos.dev.sdk.TIJOS_FRAMEWORK/TiJOS Runtime Library 3.0"/>
+	<classpathentry kind="lib" path="src/TiGW-2.0.7.jar" sourcepath="src/TiGW-2.0.7-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
