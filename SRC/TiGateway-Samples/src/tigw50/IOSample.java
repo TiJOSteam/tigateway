@@ -22,7 +22,7 @@ public class IOSample {
 			Delay.msDelay(1000);
 			
 			//GPIO11 浮空输入模式
-			gw50.digitalOpen(11, false); //
+			gw50.digitalOpen(11, true); //
 			
 			//GPIO11 输入值
 			System.out.println("gpio11 " + gw50.digitalInput(11));

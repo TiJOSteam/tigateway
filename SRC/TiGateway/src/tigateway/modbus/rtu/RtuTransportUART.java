@@ -5,6 +5,7 @@ import tigateway.modbus.protocol.ModbusCrc16;
 import tigateway.modbus.protocol.ModbusPdu;
 import tigateway.modbus.transport.IMBTransport;
 import tigateway.serialport.TiSerialPort;
+import tijos.framework.util.Formatter;
 import tijos.framework.util.logging.Logger;
 
 /**
@@ -56,7 +57,7 @@ public class RtuTransportUART implements IMBTransport {
 		buffer[size + 1] = ModbusPdu.highByte(crc);
 		size = size + 2;
 
-		Logger.info("Modbus", "Write: " + ModbusPdu.toHex(buffer, 0, size));
+		Logger.info("Modbus", "Write: " + Formatter.toHexString(buffer, 0, size, ""));
 
 		this.serialPort.write(buffer, 0, size);
 	}
@@ -130,7 +131,7 @@ public class RtuTransportUART implements IMBTransport {
 	}
 
 	protected void logData(String kind, byte[] buffer, int start, int length) {
-		Logger.info("Modbus", "Read: " + ModbusPdu.toHex(buffer, start, length));
+		Logger.info("Modbus", "Read: " + Formatter.toHexString(buffer, start, length, ""));
 	}
 
 	/**

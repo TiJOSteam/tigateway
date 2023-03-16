@@ -19,7 +19,12 @@ public abstract class TiGateway {
 	 */
 	public static TiGateway getInstance() {
 		String model = System.getProperty("hardware.oem");
+		if(model == null) {
+			model = "";
+		}
+
 		Logger.info("TiGateway", model);
+				
 		switch (model) {
 		case "tigw100":
 			return TiGW100.getInstance();
@@ -33,6 +38,8 @@ public abstract class TiGateway {
 			return TiGW50.getInstance(); 
 		case "tigw500":
 			return TiGW500.getInstance();
+		case "tigw40":
+			return TiGW40.getInstance();
 		default:
 			return TiGW200.getInstance();
 		}

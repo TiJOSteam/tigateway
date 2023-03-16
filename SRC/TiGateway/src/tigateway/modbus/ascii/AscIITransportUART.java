@@ -3,7 +3,6 @@ package tigateway.modbus.ascii;
 
 import tigateway.modbus.Modbus;
 import tigateway.modbus.protocol.ModbusLRC;
-import tigateway.modbus.protocol.ModbusPdu;
 import tigateway.modbus.transport.IMBTransport;
 import tigateway.serialport.TiSerialPort;
 import tijos.framework.util.Formatter;
@@ -60,7 +59,7 @@ public class AscIITransportUART implements IMBTransport {
 		int size = modbusClient.getPduSize() + 1; // including 1 byte for serverId
 		byte lrc = (byte) ModbusLRC.calculateLRC(buffer, 0, size);
 
-		Logger.info("Modbus", "Write: " + ModbusPdu.toHex(buffer, 0, size));
+		Logger.info("Modbus", "Write: " + Formatter.toHexString(buffer, 0, size, ""));
 
 		this.serialPort.write(new byte[] { START }, 0, 1);
 		byte[] data = Formatter.toHexString(buffer, 0, size, "").toUpperCase().getBytes();
@@ -68,7 +67,7 @@ public class AscIITransportUART implements IMBTransport {
 
 		byte[] blrc = Formatter.toHexString(lrc).toUpperCase().getBytes();
 
-		Logger.info("Modbus", "Write lrc: " + ModbusPdu.toHex(blrc, 0, blrc.length));
+		Logger.info("Modbus", "Write lrc: " + Formatter.toHexString(blrc, 0, blrc.length, ""));
 
 		this.serialPort.write(blrc);
 
@@ -170,7 +169,7 @@ public class AscIITransportUART implements IMBTransport {
 	}
 
 	protected void logData(String kind, byte[] buffer, int start, int length) {
-		Logger.info("Modbus", kind + ": " + ModbusPdu.toHex(buffer, start, length));
+		Logger.info("Modbus", kind + ": " + Formatter.toHexString(buffer, start, length, ""));
 	}
 
 	/**

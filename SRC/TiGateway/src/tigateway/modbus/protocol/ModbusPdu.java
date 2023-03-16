@@ -12,21 +12,6 @@ public class ModbusPdu {
 	protected final byte[] pdu = new byte[MAX_PDU_SIZE]; // function (1 byte), data (0..252 bytes)
 	protected int pduSize;
 
-	public static final String toHex(byte[] data, int offset, int length) {
-		if ((data.length == 0) || (offset > data.length) || (length < offset))
-			return "";
-		length = Math.min(data.length - offset, length);
-		StringBuffer buf = new StringBuffer(length * 3);
-		for (int i = 0; i < length; i++) {
-			int b = data[i + offset] & 0xFF;
-			buf.append(Integer.toHexString(b >>> 4));
-			buf.append(Integer.toHexString(b & 0xF));
-			if (i < length - 1)
-				buf.append(" ");
-		}
-		return buf.toString();
-	}
-
 	public static final String byteToHex(byte b) {
 		int t = b & 0xFF;
 		return Integer.toHexString(t >>> 4) + Integer.toHexString(t & 0xF);
@@ -44,6 +29,12 @@ public class ModbusPdu {
 	public static final int ints16ToInt32(int lowInt16, int highInt16) {
 		return (highInt16 << 16) | (lowInt16 & 0xFFFF);
 	}
+	
+	public static final long ints16ToUInt32(int lowInt16, int highInt16) {
+		long val = highInt16;		
+		val = val << 16 ; 		
+		return (val | (lowInt16 & 0xFFFF));
+	}	
 
 	public static final float ints16ToFloat(int lowInt16, int highInt16) {
 		return Float.intBitsToFloat(ints16ToInt32(lowInt16, highInt16));
@@ -165,10 +156,9 @@ public class ModbusPdu {
 			throw new IndexOutOfBoundsException();
 		if (bigEndian) {
 			// Big-endian is standard for MODBUS
-			return bytesToInt16(pdu[offset], pdu[offset + 1], unsigned);
-		} else {
 			return bytesToInt16(pdu[offset + 1], pdu[offset], unsigned);
-
+		} else {
+			return bytesToInt16(pdu[offset], pdu[offset + 1], unsigned);
 		}
 	}
 
@@ -180,6 +170,16 @@ public class ModbusPdu {
 			// this is "middle-endian" (0x12345678 stored as 0x56, 0x78, 0x12, 0x34)
 			return ints16ToInt32(readInt16FromPDU(offset, false), readInt16FromPDU(offset + 2, false));
 	}
+	
+	protected long readUInt32FromPDU(int offset, boolean bigEndian) {
+		if (bigEndian)
+			// this is "big-endian" (0x12345678 stored as 0x12, 0x34, 0x56, 0x78)
+			return ints16ToUInt32(readInt16FromPDU(offset + 2, true), readInt16FromPDU(offset, true));
+		else
+			// this is "middle-endian" (0x12345678 stored as 0x56, 0x78, 0x12, 0x34)
+			return ints16ToUInt32(readInt16FromPDU(offset, true), readInt16FromPDU(offset + 2, true));
+	}
+
 
 	protected float readFloatFromPDU(int offset, boolean bigEndian) {
 		return Float.intBitsToFloat(readInt32FromPDU(offset, bigEndian));
@@ -207,5 +207,4 @@ public class ModbusPdu {
 			return 5;
 		}
 	}
-
 }

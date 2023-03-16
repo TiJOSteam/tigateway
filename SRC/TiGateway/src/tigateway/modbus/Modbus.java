@@ -476,6 +476,23 @@ public class Modbus extends ModbusPdu {
 		} else
 			throw new IllegalStateException();
 	}
+	
+	/**
+	 * Get register value from response and convert to a uint32 value (4 bytes)
+	 *
+	 * @param address
+	 * @param bigEndian
+	 * @return
+	 */
+	public long getResponseUInt32(int address, boolean bigEndian) {
+		if ((getFunction() == FN_READ_HOLDING_REGISTERS) || (getFunction() == FN_READ_INPUT_REGISTERS)) {
+			int offset = address - getResponseAddress();
+			if ((offset < 0) || (offset >= getResponseCount()))
+				throw new IndexOutOfBoundsException();
+			return readUInt32FromPDU(2 + offset * 2, bigEndian);
+		} else
+			throw new IllegalStateException();
+	}
 
 	/**
 	 * Get register value from response and convert to a float value (4bytes)
